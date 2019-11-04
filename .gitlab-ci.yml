@@ -5,7 +5,6 @@ trivy:
   stage: test
   image: docker:stable-git
   before_script:
-    - apt install wget
     - docker build --rm -f "Dockerfile" -t nginx:${CI_COMMIT_SHORT_SHA} . 
     - export VERSION=$(curl --silent "https://api.github.com/repos/aquasecurity/trivy/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
     - curl https://github.com/aquasecurity/trivy/releases/download/v${VERSION}/trivy_${VERSION}_Linux-64bit.tar.gz
