@@ -18,5 +18,5 @@ trivy:
     - ./trivy --exit-code 0 --severity HIGH --no-progress --auto-refresh nginx:${CI_COMMIT_SHORT_SHA}
     - ./trivy --exit-code 1 --severity CRITICAL --no-progress --auto-refresh nginx:${CI_COMMIT_SHORT_SHA}
   cache:
-    directories:
+    paths:
       - $HOME/.cache/trivy
