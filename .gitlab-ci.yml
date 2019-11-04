@@ -5,7 +5,7 @@ trivy:
   stage: test
   image: docker:stable-git
   before_script:
-    - docker build -f "Dockerfile" -t nginx:${CI_COMMIT_REF_NAME} . 
+    - docker build -f "Dockerfile" -t nginx:${CI_COMMIT_SHORT_SHA} . 
     - export VERSION=$(curl --silent "https://api.github.com/repos/aquasecurity/trivy/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
     - wget https://github.com/aquasecurity/trivy/releases/download/v${VERSION}/trivy_${VERSION}_Linux-64bit.tar.gz
     - tar zxvf trivy_${VERSION}_Linux-64bit.tar.gz
@@ -15,8 +15,8 @@ trivy:
   services:
     - docker:stable-dind
   script:
-    - ./trivy --exit-code 0 --severity HIGH --no-progress --auto-refresh nginx:${CI_COMMIT_REF_NAME}
-    - ./trivy --exit-code 1 --severity CRITICAL --no-progress --auto-refresh nginx:${CI_COMMIT_REF_NAME}
+    - ./trivy --exit-code 0 --severity HIGH --no-progress --auto-refresh nginx:${CI_COMMIT_SHORT_SHA}
+    - ./trivy --exit-code 1 --severity CRITICAL --no-progress --auto-refresh nginx:${CI_COMMIT_SHORT_SHA}
   cache:
     directories:
       - $HOME/.cache/trivy
