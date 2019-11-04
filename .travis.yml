@@ -11,8 +11,8 @@ before_install:
   - wget https://github.com/aquasecurity/trivy/releases/download/v${VERSION}/trivy_${VERSION}_Linux-64bit.tar.gz
   - tar zxvf trivy_${VERSION}_Linux-64bit.tar.gz
 script:
-  - ./trivy --exit-code 0 --severity HIGH --no-progress --auto-refresh nginx:${COMMIT}
-  - ./trivy --exit-code 1 --severity CRITICAL --no-progress --auto-refresh nginx:${COMMIT}
+  - ./trivy  --auto-refresh nginx:${COMMIT}
+  - ./trivy  --auto-refresh nginx:${COMMIT}
 cache:
   directories:
     - $HOME/.cache/trivy
